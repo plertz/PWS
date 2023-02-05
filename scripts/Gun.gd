@@ -1,26 +1,9 @@
 extends Spatial
 
 onready var crosshair = get_node("../../../HUD/Hit_crosshair")
-
-# const gun.DAMAGE = 4
-
 export (Resource) var gun;
 
-# var ammo_in_weapon = 50
-# var spare_ammo = 100
-# const AMMO_IN_MAG = 50
-
-# const CAN_RELOAD = true
-# const CAN_REFILL = true
-
-# const IDLE_ANIM_NAME = "Rifle_idle"
-# const FIRE_ANIM_NAME = "Rifle_fire"
-# const RELOADING_ANIM_NAME = "Rifle_reload"
-# const GUN_EQUIP = "Rifle_equip"
-# const GUN_UNEQUIP = "Rifle_unequip"
-
 var is_weapon_enabled = false
-
 var player_node = null
 
 func _ready():

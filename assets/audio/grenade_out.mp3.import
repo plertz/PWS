@@ -11,5 +11,5 @@ dest_files=[ "res://.import/grenade_out.mp3-c20c641ec36d7041694e20588be71e70.mp3
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

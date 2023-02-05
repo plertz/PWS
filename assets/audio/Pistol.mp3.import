@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Pistol.mp3-d02fd3de1f3f7151562b6c4761b8dbb5.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/Pistol.mp3"
+dest_files=[ "res://.import/Pistol.mp3-d02fd3de1f3f7151562b6c4761b8dbb5.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
