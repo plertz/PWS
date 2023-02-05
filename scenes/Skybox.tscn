@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="ProceduralSky" id=1]
+sky_top_color = Color( 0.0235294, 0.027451, 0.0313726, 1 )
+sky_horizon_color = Color( 0.329412, 0.411765, 0.478431, 1 )
+sky_curve = 0.118756
+ground_energy = 6.28
+sun_color = Color( 0.843137, 0.27451, 0.27451, 1 )
+sun_angle_min = 15.85
+sun_angle_max = 128.57
+sun_curve = 0.0159319
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+
+[node name="Skybox" type="Spatial"]
+
+[node name="skybox" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )

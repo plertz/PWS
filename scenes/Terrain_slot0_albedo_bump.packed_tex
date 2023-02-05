@@ -1,0 +1,8 @@
+{
+	"contains_albedo": true,
+	"resolution": 512,
+	"src": {
+		"a": "res://world_terrain/normal.png",
+		"rgb": "res://terrain_textures/rock/Rock035_2K_Displacement.png"
+	}
+}

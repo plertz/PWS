@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/grenade_out.mp3-c20c641ec36d7041694e20588be71e70.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/grenade_out.mp3"
+dest_files=[ "res://.import/grenade_out.mp3-c20c641ec36d7041694e20588be71e70.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

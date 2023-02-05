@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://lib/Gun_stats.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+ammo_in_weapon = 50
+spare_ammo = 150
+AMMO_IN_MAG = 50
+DAMAGE = 4
+CAN_RELOAD = true
+CAN_REFILL = true
+IDLE_ANIM_NAME = "Rifle_idle"
+FIRE_ANIM_NAME = "Rifle_fire"
+RELOADING_ANIM_NAME = "Rifle_reload"
+GUN_EQUIP = "Rifle_equip"
+GUN_UNEQUIP = "Rifle_unequip"
