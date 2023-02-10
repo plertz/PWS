@@ -8,7 +8,7 @@ export var audio_tracks = {
 	"knife": preload("res://assets/audio/Knife.mp3")
 }
 
-export (float) var volume_db = 40;
+export (float) var volume_db = 10;
 
 func play_audio(audio_track):
 	var Audio_player = AudioStreamPlayer.new()
@@ -16,7 +16,6 @@ func play_audio(audio_track):
 	Audio_player.volume_db = volume_db
 	Audio_player.script = preload("res://lib/Delete_sound.gd")
 	
-	# var len_arr = get_children().size()
 	Audio_player.name = str(count)
 	add_child(Audio_player)
 	count += 1

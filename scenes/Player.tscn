@@ -20,7 +20,7 @@
 [ext_resource path="res://scripts/Hit_crosshair.gd" type="Script" id=19]
 [ext_resource path="res://scripts/Gun.gd" type="Script" id=20]
 [ext_resource path="res://data/Knife_stats.tres" type="Resource" id=21]
-[ext_resource path="res://scripts/weapon_audio.gd" type="Script" id=23]
+[ext_resource path="res://scripts/Weapon_audio.gd" type="Script" id=23]
 
 [sub_resource type="CapsuleMesh" id=27]
 radius = 1.2
@@ -4152,10 +4152,7 @@ mesh = SubResource( 29 )
 transform = Transform( 1, 0, 0, 0, 0.983001, 0.1836, 0, -0.1836, 0.983001, 0, -0.411827, 1.2795 )
 
 [node name="Player_sound_system" type="Node" parent="Rotation_Helper"]
-
-[node name="Weapon_audio" type="Node" parent="Rotation_Helper/Player_sound_system"]
 script = ExtResource( 23 )
-volume_db = 20.0
 
 [node name="HUD" type="Control" parent="."]
 margin_right = 1024.0

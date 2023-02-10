@@ -1,6 +1,5 @@
 extends AudioStreamPlayer
 
-
 func _ready():
 	play()
 	connect("finished", self, "_delete")

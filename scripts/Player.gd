@@ -4,7 +4,7 @@ signal menu_open;
 signal menu_close;
 
 
-onready var weapon_audio = $Rotation_Helper/Player_sound_system/Weapon_audio
+onready var weapon_audio = $Rotation_Helper/Player_sound_system
 
 
 onready var NPC = { 
@@ -22,7 +22,7 @@ var death_text = {
 	"lava": "Someone tried to swim in lava!!! STUPID"
 }
 
-var movement_freezed = false;
+var freeze = false;
 
 const GRAVITY = -24.8
 var vel = Vector3()
@@ -68,10 +68,6 @@ const GRENADE_THROW_FORCE = 50
 var health = 100
 const MAX_HEALTH = 150
 
-var grabbed_object = null
-const OBJECT_THROW_FORCE = 120
-const OBJECT_GRAB_DISTANCE = 7
-const OBJECT_GRAB_RAY_DISTANCE = 10
 
 var UI_status_label
 
@@ -105,13 +101,16 @@ func _ready():
 
 
 func _physics_process(_delta):
-	process_input(_delta)
-	process_movement(_delta)
-	process_view_input(_delta)
-	process_NPC(_delta)
+	if !freeze:
+		process_input(_delta)
+		process_movement(_delta)
+		process_view_input(_delta)
+		process_NPC(_delta)
+		
+		process_changing_weapons(_delta)
+		process_reloading(_delta)
 	
-	process_changing_weapons(_delta)
-	process_reloading(_delta)
+	process_intterupts(_delta)
 
 
 func process_input(_delta):
@@ -141,15 +140,6 @@ func process_input(_delta):
 		is_sprinting = true
 	else:
 		is_sprinting = false
-
-	if Input.is_action_just_pressed("ui_cancel"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			emit_signal("menu_close")
-			
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			emit_signal("menu_open")
 
 	var weapon_change_number = WEAPON_NAME_TO_NUMBER[current_weapon_name]
 	
@@ -232,13 +222,6 @@ func process_input(_delta):
 			grenade_clone.global_transform = $Rotation_Helper/Grenade_Toss_Pos.global_transform
 			grenade_clone.apply_impulse(Vector3(0,0,0), grenade_clone.global_transform.basis.z * GRENADE_THROW_FORCE)
 
-
-	if Input.is_action_just_pressed("talk"):
-		print("talking")
-		if NPC.body != null and NPC.body.has_method("talk") and NPC.NPC_menu.visible:
-			NPC.NPC_menu.hide()
-			NPC.talking = true;
-			NPC.body.talk()	
 
 func process_movement(delta):
 	dir.y = 0
@@ -337,7 +320,7 @@ func process_reloading(_delta):
 		reloading_weapon = false
 
 func _input(event):
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and !freeze:
 		rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
 		self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
 
@@ -362,6 +345,30 @@ func _input(event):
 						changing_weapon = true
 						mouse_scroll_value = round_mouse_scroll_value
 
+func process_intterupts(_delta):	
+	if Input.is_action_just_pressed("ui_cancel"):
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			emit_signal("menu_close")
+			freeze = false;
+			
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			emit_signal("menu_open")
+			freeze = true;
+	
+	if Input.is_action_just_pressed("interact"):
+		if NPC.body != null and NPC.body.has_method("talk") and NPC.NPC_menu.visible:
+			NPC.NPC_menu.hide()
+			NPC.talking = true;
+			NPC.body.talk()
+			freeze = true;
+		elif NPC.body != null and NPC.body.has_method("talk") and freeze:
+			NPC.NPC_menu.show()
+			NPC.talking = false;
+			NPC.body.talk()
+			freeze = false
+
 func process_NPC(_delta):
 
 	NPC.ray.force_raycast_update()
@@ -378,6 +385,7 @@ func process_NPC(_delta):
 			NPC.NPC_menu.hide();	
 	else:
 		NPC.NPC_menu.hide();
+
 
 func death(cause):
 	death_label.text = death_text[cause]

@@ -10,8 +10,7 @@ func _on_Player_menu_close():
 
 
 func _on_Continue_pressed():
-	hide()
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	Input.action_press("ui_cancel")
 
 
 func _on_Leave_pressed():
