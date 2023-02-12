@@ -24,7 +24,8 @@ onready var death_container = $HUD/Death_screen/VBoxContainer
 onready var death_button = $HUD/Death_screen/VBoxContainer/Button
 var death_text = {
 	"lava": "Someone tried to swim in lava!!! STUPID",
-	"E1" : "Someone got smashed to death!!! STUPID"
+	"E1" : "Someone got smashed to death!!! STUPID",
+	"G" : "Someone blew up...... a bit STUPID"
 }
 
 var freeze = false;
@@ -63,11 +64,19 @@ const WEAPON_NAME_TO_NUMBER = {"UNARMED":0, "KNIFE":1, "PISTOL":2, "RIFLE":3}
 var changing_weapon = false
 var changing_weapon_name = "UNARMED"
 var reloading_weapon = false
+onready var weapon_display = {
+	"UNARMED" : $HUD/Weapons/Unarmed,
+	"KNIFE" : $HUD/Weapons/Knife,
+	"PISTOL" : $HUD/Weapons/Pistol,
+	"RIFLE" : $HUD/Weapons/Rifle
+}
+
+onready var grenade_display = get_node("HUD/Weapons/Grenade/num")
 
 var grenade_amounts = {"Grenade":2, "Sticky Grenade":2}
 var current_grenade = "Grenade"
 var grenade_scene = preload("res://scenes/Grenade.tscn")
-var sticky_grenade_scene = preload("res://scenes/Sticky_Grenade.tscn")
+# var sticky_grenade_scene = preload("res://scenes/Sticky_Grenade.tscn")
 const GRENADE_THROW_FORCE = 50
 
 
@@ -103,8 +112,10 @@ func _ready():
 	death_button.connect("pressed", self, "respawn")
 
 	setup_health_bar()
+	setup_weapon_display()
+	update_grenade_display()
 
-	unique_name_in_owner = true;
+	# unique_name_in_owner = true;
 	# set_owner(get_tree().get_root())
 
 
@@ -170,6 +181,7 @@ func process_input(_delta):
 	if changing_weapon == false:
 		if reloading_weapon == false:
 			if WEAPON_NUMBER_TO_NAME[weapon_change_number] != current_weapon_name:
+				switch_weapon_display(current_weapon_name, WEAPON_NUMBER_TO_NAME[weapon_change_number] )
 				changing_weapon_name = WEAPON_NUMBER_TO_NAME[weapon_change_number]
 				changing_weapon = true
 				mouse_scroll_value = weapon_change_number
@@ -208,23 +220,24 @@ func process_input(_delta):
 					else:
 						reloading_weapon = true
 	
-	if Input.is_action_just_pressed("change_grenade"):
-		if current_grenade == "Grenade":
-			current_grenade = "Sticky Grenade"
-		elif current_grenade == "Sticky Grenade":
-			current_grenade = "Grenade"
+	# if Input.is_action_just_pressed("change_grenade"):
+	# 	if current_grenade == "Grenade":
+	# 		current_grenade = "Sticky Grenade"
+	# 	elif current_grenade == "Sticky Grenade":
+	# 		current_grenade = "Grenade"
 	
 	if Input.is_action_just_pressed("fire_grenade"):
 		if grenade_amounts[current_grenade] > 0:
 			grenade_amounts[current_grenade] -= 1
+			update_grenade_display()
 	
-			var grenade_clone
-			if (current_grenade == "Grenade"):
-				grenade_clone = grenade_scene.instance()
-			elif (current_grenade == "Sticky Grenade"):
-				grenade_clone = sticky_grenade_scene.instance()
-				# Sticky grenades will stick to the player if we do not pass ourselves
-				grenade_clone.player_body = self
+			var grenade_clone = grenade_scene.instance()
+			# if (current_grenade == "Grenade"):
+			# 	grenade_clone = grenade_scene.instance()
+			# elif (current_grenade == "Sticky Grenade"):
+			# 	grenade_clone = sticky_grenade_scene.instance()
+			# 	# Sticky grenades will stick to the player if we do not pass ourselves
+			# 	grenade_clone.player_body = self
 	
 			get_tree().root.add_child(grenade_clone)
 			grenade_clone.global_transform = $Rotation_Helper/Grenade_Toss_Pos.global_transform
@@ -349,6 +362,7 @@ func _input(event):
 				if reloading_weapon == false:
 					var round_mouse_scroll_value = int(round(mouse_scroll_value))
 					if WEAPON_NUMBER_TO_NAME[round_mouse_scroll_value] != current_weapon_name:
+						switch_weapon_display(current_weapon_name, WEAPON_NUMBER_TO_NAME[round_mouse_scroll_value] )
 						changing_weapon_name = WEAPON_NUMBER_TO_NAME[round_mouse_scroll_value]
 						changing_weapon = true
 						mouse_scroll_value = round_mouse_scroll_value
@@ -394,6 +408,20 @@ func process_NPC(_delta):
 	else:
 		NPC.NPC_menu.hide();
 
+func setup_weapon_display():
+	weapon_display["KNIFE"].hide()
+	weapon_display["PISTOL"].hide()
+	weapon_display["RIFLE"].hide()
+	weapon_display["UNARMED"].show()
+	
+
+func switch_weapon_display(dis_prev, dis_new):
+	weapon_display[dis_prev].hide()
+	weapon_display[dis_new].show()
+
+func update_grenade_display():
+	grenade_display.text = str(grenade_amounts["Grenade"])
+
 func refill_health():
 	health = MAX_HEALTH
 	update_health_bar()
@@ -420,27 +448,30 @@ func fire_bullet():
 
 	weapons[current_weapon_name].fire_weapon()
 
-func add_health(additional_health):
-	health += additional_health
-	health = clamp(health, 0, MAX_HEALTH)
+# func add_health(additional_health):
+# 	health += additional_health
+# 	health = clamp(health, 0, MAX_HEALTH)
 
-func add_ammo(additional_ammo):
-	if (current_weapon_name != "UNARMED"):
-		if (weapons[current_weapon_name].gun.CAN_REFILL == true):
-			weapons[current_weapon_name].gun.spare_ammo += weapons[current_weapon_name].gun.AMMO_IN_MAG * additional_ammo
+# func add_ammo(additional_ammo):
+# 	if (current_weapon_name != "UNARMED"):
+# 		if (weapons[current_weapon_name].gun.CAN_REFILL == true):
+# 			weapons[current_weapon_name].gun.spare_ammo += weapons[current_weapon_name].gun.AMMO_IN_MAG * additional_ammo
 
-func add_grenade(additional_grenade):
-	grenade_amounts[current_grenade] += additional_grenade
-	grenade_amounts[current_grenade] = clamp(grenade_amounts[current_grenade], 0, 4)
+# func add_grenade(additional_grenade):
+# 	grenade_amounts[current_grenade] += additional_grenade
+# 	grenade_amounts[current_grenade] = clamp(grenade_amounts[current_grenade], 0, 4)
 
 # player identifier
 func player():
 	return
 
-func bullet_hit(damage):
+func G_hit(damage, msg):
+	hit(damage, msg)
+
+func hit(damage, msg):
 	health -= damage
 	update_health_bar()
 	if health < 1:
 		refill_health()
-		death("E1")
+		death(msg)
 

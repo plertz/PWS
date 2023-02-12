@@ -31,7 +31,6 @@ var rot_xform;
 
 var wandering = true
 
-
 func _ready():
 	# setup_raycat()
 	# print(rotate_helper)
@@ -41,6 +40,7 @@ func _ready():
 		player = get_tree().get_root().get_node("World/Player")
 
 	setup_hitbox()
+	
 	
 func _physics_process(delta):
 # 	update_raycast()
@@ -64,9 +64,6 @@ func move(speed, delta):
 	dir = dir.normalized()
 	update_dir(dir)
 
-# 	print(rot_xform.z)
-# 	# dir += Vector3(cos(rot_xform.z), 0, sin(rot_xform.z))
-# 	dir.normalized()
 	vel.x = dir.x * speed;
 	vel.z = dir.z * speed;
 	vel.y += delta*GRAVITY
@@ -125,6 +122,6 @@ func _overlapping(body):
 	hit(body)
 
 func hit(body):
-	if body.has_method("bullet_hit") and body.has_method("player"):
+	if body.has_method("hit") and body.has_method("player"):
 		atk_timer.start()
-		body.bullet_hit(DAMAGE)
+		body.hit(DAMAGE, "E1")

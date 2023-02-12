@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource( 1 )
+NAME = "Knife"
 ammo_in_weapon = 1
 spare_ammo = 1
 AMMO_IN_MAG = 1

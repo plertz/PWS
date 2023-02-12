@@ -4,8 +4,9 @@
 
 [resource]
 script = ExtResource( 1 )
+NAME = "Rifle"
 ammo_in_weapon = 50
-spare_ammo = 150
+spare_ammo = 250
 AMMO_IN_MAG = 50
 DAMAGE = 4
 CAN_RELOAD = true

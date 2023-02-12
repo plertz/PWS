@@ -6,8 +6,18 @@ export (Resource) var gun;
 var is_weapon_enabled = false
 var player_node = null
 
+onready var weapon_display_src = "../../../HUD/Weapons/" + gun.NAME + "/VBoxContainer/Ammo"
+onready var weapon_display_ammo = get_node(weapon_display_src)
+
 func _ready():
-	pass
+	update_weapon_display()
+
+
+# func setup_weapon_display():
+# 	weapon_display_ammo.text = str(gun.ammo_in_weapon) + "/" + str(gun.spare_ammo)
+
+func update_weapon_display():
+	weapon_display_ammo.text = str(gun.ammo_in_weapon) + "/" + str(gun.spare_ammo)
 
 func fire_weapon():
 	var ray = $Ray_Cast
@@ -23,6 +33,7 @@ func fire_weapon():
 			crosshair.crosshair_show()
 	
 	gun.ammo_in_weapon -= 1
+	update_weapon_display()
 
 func equip_weapon():
 	if player_node.animation_manager.current_state == gun.IDLE_ANIM_NAME:
@@ -66,6 +77,7 @@ func reload_weapon():
 			gun.ammo_in_weapon += gun.spare_ammo
 			gun.spare_ammo = 0
 
+		update_weapon_display()
 		player_node.animation_manager.set_animation(gun.RELOADING_ANIM_NAME)
 
 		return true

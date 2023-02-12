@@ -1,6 +1,6 @@
 extends RigidBody
 
-export (int) var GRENADE_DAMAGE = 60
+export (int) var DAMAGE = 60
 
 const GRENADE_TIME = 2
 var grenade_timer = 0
@@ -21,6 +21,7 @@ func _ready():
 
 	explosion_particles.emitting = false
 	explosion_particles.one_shot = true
+	
 
 func _process(delta):
 
@@ -39,7 +40,9 @@ func _process(delta):
 			var bodies = blast_area.get_overlapping_bodies()
 			for body in bodies:
 				if body.has_method("bullet_hit"):
-					body.bullet_hit(GRENADE_DAMAGE)
+					body.bullet_hit(DAMAGE)
+				elif body.has_method("G_hit"):
+					body.G_hit(DAMAGE, "G")
 
 
 		if explosion_wait_timer < EXPLOSION_WAIT_TIME:

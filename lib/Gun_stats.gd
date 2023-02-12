@@ -1,6 +1,9 @@
 extends Resource
 class_name Gun_stats
 
+export (String) var NAME
+
+
 export (int) var ammo_in_weapon 
 export (int) var spare_ammo 
 export (int) var AMMO_IN_MAG 
