@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=1]
+
+[sub_resource type="BoxShape" id=12]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 2.0
@@ -12,18 +14,124 @@ mid_height = 6.0
 
 [sub_resource type="SpatialMaterial" id=3]
 
-[node name="Enemy" type="KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.983, 0, 5.03117, 0 )
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="CubeMesh" id=5]
+material = SubResource( 4 )
+size = Vector3( 5, 0.5, 0.5 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.0509804, 0.666667, 0.101961, 0.988235 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.988235, 0, 0, 1 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="ViewportTexture" id=11]
+viewport_path = NodePath("Enemy/Damage/Viewport")
+
+[node name="Enemy" type="Spatial"]
+
+[node name="Enemy" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37113e-08, 0.999998, 0, -0.999999, -4.37113e-08, 0, 5, 0 )
 collision_layer = 8
-collision_mask = 3
+collision_mask = 11
 script = ExtResource( 1 )
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+[node name="Hitbox" type="Spatial" parent="Enemy"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37115e-08, 0, 2.18557e-07, -5.00001 )
+
+[node name="Area" type="Area" parent="Enemy/Hitbox"]
+transform = Transform( 2.50632, 0, 0, 0, 3.5833, 0, 0, -5.53023e-15, 2.02668, 4.42337, 4.94099, -1.75539e-14 )
+collision_layer = 8
+
+[node name="CollisionShape" type="CollisionShape" parent="Enemy/Hitbox/Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.134614, 0, 0 )
+shape = SubResource( 12 )
+
+[node name="Hit_timer" type="Timer" parent="Enemy/Hitbox"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Enemy"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+[node name="Rotation_Helper" type="Spatial" parent="Enemy"]
+transform = Transform( 0.999962, -0.00872654, 0, 0.00872654, 0.999962, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="Body" type="MeshInstance" parent="Enemy/Rotation_Helper"]
 mesh = SubResource( 2 )
-skeleton = NodePath("../CollisionShape")
+skeleton = NodePath("../../CollisionShape")
 material/0 = SubResource( 3 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Enemy/Rotation_Helper"]
+transform = Transform( 1, 0, 0, 0, 1, -3.55271e-14, 0, 7.10543e-14, 1, 4.48915, -0.138911, 2.75545 )
+mesh = SubResource( 5 )
+
+[node name="raycast" type="Spatial" parent="Enemy/Rotation_Helper"]
+transform = Transform( 1, -6.51926e-09, 1.249e-16, 1.86265e-09, 1, 1.06581e-14, 1.94289e-16, -5.32907e-14, 1, 2.39421, -0.191414, 2.71365 )
+
+[node name="1" type="RayCast" parent="Enemy/Rotation_Helper/raycast"]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
+cast_to = Vector3( 30, 0, 0 )
+
+[node name="2" type="RayCast" parent="Enemy/Rotation_Helper/raycast"]
+transform = Transform( 0.382683, -0.92388, 0, 0.92388, 0.382683, 0, 0, 0, 1, 0, 0, 0 )
+cast_to = Vector3( 30, -1, 0 )
+
+[node name="3" type="RayCast" parent="Enemy/Rotation_Helper/raycast"]
+transform = Transform( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0 )
+cast_to = Vector3( 30, -1, 0 )
+
+[node name="4" type="RayCast" parent="Enemy/Rotation_Helper/raycast"]
+transform = Transform( 0.92388, -0.382683, 0, 0.382683, 0.92388, 0, 0, 0, 1, 0, 0, 0 )
+cast_to = Vector3( 30, -1, 0 )
+
+[node name="5" type="RayCast" parent="Enemy/Rotation_Helper/raycast"]
+cast_to = Vector3( 30, -1, 0 )
+
+[node name="6" type="RayCast" parent="Enemy/Rotation_Helper/raycast"]
+transform = Transform( 0.923879, 0.382683, 0, -0.382683, 0.923879, 0, 0, 0, 1, 0, 0, 0 )
+cast_to = Vector3( 30, -1, 0 )
+
+[node name="7" type="RayCast" parent="Enemy/Rotation_Helper/raycast"]
+transform = Transform( 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0 )
+cast_to = Vector3( 30, -1, 0 )
+
+[node name="8" type="RayCast" parent="Enemy/Rotation_Helper/raycast"]
+transform = Transform( 0.382683, 0.923879, 0, -0.923879, 0.382683, 0, 0, 0, 1, 0, 0, 0 )
+cast_to = Vector3( 30, -1, 0 )
+
+[node name="9" type="RayCast" parent="Enemy/Rotation_Helper/raycast"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
+cast_to = Vector3( 30, -1, 0 )
+
+[node name="Damage" type="Spatial" parent="Enemy"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37115e-08, 0, 2.18557e-07, -5.00001 )
+
+[node name="Viewport" type="Viewport" parent="Enemy/Damage"]
+size = Vector2( 300, 50 )
+transparent_bg = true
+
+[node name="ProgressBar" type="ProgressBar" parent="Enemy/Damage/Viewport"]
+margin_right = 300.0
+margin_bottom = 50.0
+custom_styles/fg = SubResource( 9 )
+custom_styles/bg = SubResource( 10 )
+min_value = 4.0
+value = 100.0
+percent_visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="Enemy/Damage"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 1.77636e-14, 1, 0, 11.1749, -1.42109e-13 )
+visible = false
+billboard = 2
+texture = SubResource( 11 )

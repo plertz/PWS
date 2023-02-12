@@ -6,7 +6,7 @@ onready var sub = $Sub
 onready var text_field = $Sub/text_rect/text
 onready var timer = $Text_timer
 
-export (String) var text = ["Hello there strange", "welcome"]
+export (Array, String) var text = ["Hello there strange", "welcome"]
 export (float) var delay_time_s = 0.1
 var lines = 0;
 var text_length = [];

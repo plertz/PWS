@@ -1,12 +1,12 @@
 [gd_scene load_steps=50 format=2]
 
-[ext_resource path="res://assets/Colors.material" type="Material" id=1]
-[ext_resource path="res://assets/Emission.material" type="Material" id=2]
+[ext_resource path="res://assets/materials/Colors.material" type="Material" id=1]
+[ext_resource path="res://assets/materials/Emission.material" type="Material" id=2]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=3]
-[ext_resource path="res://assets/GunMaterial.material" type="Material" id=4]
-[ext_resource path="res://assets/MuzzleFlash.material" type="Material" id=5]
-[ext_resource path="res://assets/Gun_Emission.material" type="Material" id=6]
-[ext_resource path="res://assets/32-32_white.png" type="Texture" id=7]
+[ext_resource path="res://assets/materials/GunMaterial.material" type="Material" id=4]
+[ext_resource path="res://assets/materials/MuzzleFlash.material" type="Material" id=5]
+[ext_resource path="res://assets/materials/Gun_Emission.material" type="Material" id=6]
+[ext_resource path="res://assets/ui/32-32_white.png" type="Texture" id=7]
 [ext_resource path="res://fonts/montreal/Montreal-Bold.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://scripts/HUD.gd" type="Script" id=9]
 [ext_resource path="res://fonts/montreal/Montreal.tres" type="DynamicFont" id=10]
@@ -32,22 +32,6 @@ height = 6.0
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.8, 0.2, 0.8 )
-
-[sub_resource type="SpatialMaterial" id=3]
-resource_name = "GunMaterial.001"
-metallic = 0.5
-roughness = 0.542695
-
-[sub_resource type="SpatialMaterial" id=4]
-resource_name = "MuzzleFlash.001"
-albedo_color = Color( 0.639282, 0.566701, 0, 1 )
-metallic = 0.5
-roughness = 0.542695
-emission_enabled = true
-emission = Color( 1.59821, 1.41675, 0, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
 
 [sub_resource type="SpatialMaterial" id=5]
 resource_name = "Gun_Emission.001"
@@ -93,7 +77,6 @@ surfaces/2 = {
 "blend_shape_data": [  ],
 "format": 98263,
 "index_count": 10518,
-"material": SubResource( 3 ),
 "name": "GunMaterial.001",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -106,7 +89,6 @@ surfaces/3 = {
 "blend_shape_data": [  ],
 "format": 98263,
 "index_count": 240,
-"material": SubResource( 4 ),
 "name": "MuzzleFlash.001",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -3848,6 +3830,22 @@ extents = Vector3( 1.5, 2, 1.5 )
 
 [sub_resource type="SphereMesh" id=29]
 
+[sub_resource type="StyleBoxFlat" id=32]
+bg_color = Color( 0.0509804, 0.666667, 0.101961, 0.988235 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=33]
+bg_color = Color( 0.988235, 0, 0, 1 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0, 0, 0, 1 )
+
 [sub_resource type="DynamicFont" id=26]
 size = 40
 font_data = ExtResource( 11 )
@@ -4063,7 +4061,7 @@ bones/33/rest = Transform( 1, 2.38419e-07, 0, -2.38419e-07, 1, 0, 0, 0, 1, 0.830
 bones/33/enabled = true
 bones/33/bound_children = [  ]
 
-[node name="GodotBattleBot" type="MeshInstance" parent="Rotation_Helper/Model/Armature/Skeleton"]
+[node name="Model" type="MeshInstance" parent="Rotation_Helper/Model/Armature/Skeleton"]
 cast_shadow = 0
 mesh = SubResource( 6 )
 material/0 = ExtResource( 1 )
@@ -4267,7 +4265,19 @@ margin_bottom = 36.0
 rect_rotation = 40.3
 color = Color( 0.564706, 0.0392157, 0.0392157, 1 )
 
-[node name="top_right" type="Label" parent="HUD"]
+[node name="Health_bar" type="ProgressBar" parent="HUD"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -500.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = 50.0
+custom_styles/fg = SubResource( 32 )
+custom_styles/bg = SubResource( 33 )
+value = 100.0
+percent_visible = false
+
+[node name="top_left" type="Label" parent="HUD"]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 75.0

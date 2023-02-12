@@ -14,12 +14,17 @@ onready var NPC = {
 	"talking": false
 }
 
+const MAX_HEALTH = 10
+var health = MAX_HEALTH
+onready var health_bar = $HUD/Health_bar
+
 onready var death_screen = $HUD/Death_screen
 onready var death_label = $HUD/Death_screen/VBoxContainer/Label
 onready var death_container = $HUD/Death_screen/VBoxContainer
 onready var death_button = $HUD/Death_screen/VBoxContainer/Button
 var death_text = {
-	"lava": "Someone tried to swim in lava!!! STUPID"
+	"lava": "Someone tried to swim in lava!!! STUPID",
+	"E1" : "Someone got smashed to death!!! STUPID"
 }
 
 var freeze = false;
@@ -65,8 +70,6 @@ var grenade_scene = preload("res://scenes/Grenade.tscn")
 var sticky_grenade_scene = preload("res://scenes/Sticky_Grenade.tscn")
 const GRENADE_THROW_FORCE = 50
 
-var health = 100
-const MAX_HEALTH = 150
 
 
 var UI_status_label
@@ -98,6 +101,11 @@ func _ready():
 	changing_weapon_name = "UNARMED"
 
 	death_button.connect("pressed", self, "respawn")
+
+	setup_health_bar()
+
+	unique_name_in_owner = true;
+	# set_owner(get_tree().get_root())
 
 
 func _physics_process(_delta):
@@ -386,6 +394,15 @@ func process_NPC(_delta):
 	else:
 		NPC.NPC_menu.hide();
 
+func refill_health():
+	health = MAX_HEALTH
+	update_health_bar()
+
+func setup_health_bar():
+	health_bar.max_value = MAX_HEALTH
+
+func update_health_bar():
+	health_bar.value = health
 
 func death(cause):
 	death_label.text = death_text[cause]
@@ -416,6 +433,14 @@ func add_grenade(additional_grenade):
 	grenade_amounts[current_grenade] += additional_grenade
 	grenade_amounts[current_grenade] = clamp(grenade_amounts[current_grenade], 0, 4)
 
-func bullet_hit(damage, bullet_hit_pos):
+# player identifier
+func player():
+	return
+
+func bullet_hit(damage):
 	health -= damage
+	update_health_bar()
+	if health < 1:
+		refill_health()
+		death("E1")
 
