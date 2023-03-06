@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Overworld_Lava_Assault.mp3-7cfa2503b1867e492deefa32630e6aae.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/Overworld_Lava_Assault.mp3"
+dest_files=[ "res://.import/Overworld_Lava_Assault.mp3-7cfa2503b1867e492deefa32630e6aae.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

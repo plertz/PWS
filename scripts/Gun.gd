@@ -2,6 +2,9 @@ extends Spatial
 
 onready var crosshair = get_node("../../../HUD/Hit_crosshair")
 export (Resource) var gun;
+export (Resource) var wp_range;
+
+var SPARE_AMMO = 0;
 
 var is_weapon_enabled = false
 var player_node = null
@@ -9,9 +12,15 @@ var player_node = null
 onready var weapon_display_src = "../../../HUD/Weapons/" + gun.NAME + "/VBoxContainer/Ammo"
 onready var weapon_display_ammo = get_node(weapon_display_src)
 
+onready var raycast = $Ray_Cast
+
 func _ready():
 	update_weapon_display()
+	setup_range()
+	SPARE_AMMO = gun.spare_ammo
 
+func setup_range():
+	raycast.cast_to.z = wp_range.wp_range;
 
 # func setup_weapon_display():
 # 	weapon_display_ammo.text = str(gun.ammo_in_weapon) + "/" + str(gun.spare_ammo)
@@ -83,3 +92,8 @@ func reload_weapon():
 		return true
 
 	return false
+
+func refill_ammo():
+	gun.ammo_in_weapon = gun.AMMO_IN_MAG
+	gun.spare_ammo = SPARE_AMMO
+	update_weapon_display()

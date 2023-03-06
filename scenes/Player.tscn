@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://assets/materials/Colors.material" type="Material" id=1]
 [ext_resource path="res://assets/materials/Emission.material" type="Material" id=2]
@@ -15,13 +15,19 @@
 [ext_resource path="res://scripts/Animation_Player.gd" type="Script" id=13]
 [ext_resource path="res://assets/ui/grenade.png" type="Texture" id=14]
 [ext_resource path="res://scripts/Knife.gd" type="Script" id=15]
-[ext_resource path="res://data/Rifle_stats.tres" type="Resource" id=16]
+[ext_resource path="res://data/weapons/Rifle_stats.tres" type="Resource" id=16]
 [ext_resource path="res://addons/texture_fonts/Assets/Fonts/RobotoMono/RobotoMono-Medium.ttf" type="DynamicFontData" id=17]
-[ext_resource path="res://data/Pistol_stats.tres" type="Resource" id=18]
+[ext_resource path="res://data/weapons/Pistol_stats.tres" type="Resource" id=18]
 [ext_resource path="res://scripts/Hit_crosshair.gd" type="Script" id=19]
 [ext_resource path="res://scripts/Gun.gd" type="Script" id=20]
-[ext_resource path="res://data/Knife_stats.tres" type="Resource" id=21]
+[ext_resource path="res://data/weapons/Knife_stats.tres" type="Resource" id=21]
+[ext_resource path="res://assets/audio/walking.wav" type="AudioStream" id=22]
 [ext_resource path="res://scripts/Weapon_audio.gd" type="Script" id=23]
+[ext_resource path="res://assets/audio/scream.wav" type="AudioStream" id=24]
+[ext_resource path="res://scripts/Scream_sound.gd" type="Script" id=25]
+[ext_resource path="res://data/weapons/short_range.tres" type="Resource" id=26]
+[ext_resource path="res://data/weapons/Long_range.tres" type="Resource" id=27]
+[ext_resource path="res://lib/Sound_effect_volume_player.gd" type="Script" id=28]
 
 [sub_resource type="CapsuleMesh" id=27]
 radius = 1.2
@@ -3897,6 +3903,7 @@ script = ExtResource( 3 )
 
 [node name="Body" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4.95152, 0 )
+layers = 2
 mesh = SubResource( 27 )
 skeleton = NodePath("../Rotation_Helper")
 
@@ -4089,6 +4096,7 @@ bones/33/enabled = true
 bones/33/bound_children = [  ]
 
 [node name="Model" type="MeshInstance" parent="Rotation_Helper/Model/Armature/Skeleton"]
+layers = 2
 cast_shadow = 0
 mesh = SubResource( 6 )
 material/0 = ExtResource( 1 )
@@ -4137,6 +4145,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.3914, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.163315, 10.4607, 7.04431 )
 script = ExtResource( 20 )
 gun = ExtResource( 16 )
+wp_range = ExtResource( 27 )
 
 [node name="Ray_Cast" type="RayCast" parent="Rotation_Helper/Gun_Fire_Points/Rifle_Point"]
 cast_to = Vector3( 0, 0, 80 )
@@ -4160,6 +4169,7 @@ shape = SubResource( 22 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.436506, 11.3604, 4.77607 )
 script = ExtResource( 20 )
 gun = ExtResource( 18 )
+wp_range = ExtResource( 26 )
 
 [node name="Ray_Cast" type="RayCast" parent="Rotation_Helper/Gun_Fire_Points/Pistol_Point"]
 cast_to = Vector3( 0, 0, 40 )
@@ -4175,6 +4185,17 @@ mesh = SubResource( 29 )
 
 [node name="Grenade_Toss_Pos" type="Spatial" parent="Rotation_Helper"]
 transform = Transform( 1, 0, 0, 0, 0.983001, 0.1836, 0, -0.1836, 0.983001, 0, -0.411827, 1.2795 )
+
+[node name="Scream_sound" type="AudioStreamPlayer" parent="Rotation_Helper"]
+stream = ExtResource( 24 )
+script = ExtResource( 25 )
+
+[node name="Timer" type="Timer" parent="Rotation_Helper/Scream_sound"]
+one_shot = true
+
+[node name="Walking_sound" type="AudioStreamPlayer" parent="Rotation_Helper"]
+stream = ExtResource( 22 )
+script = ExtResource( 28 )
 
 [node name="Player_sound_system" type="Node" parent="Rotation_Helper"]
 script = ExtResource( 23 )

@@ -10,13 +10,17 @@ var health_set = false
 onready var health_container = $Damage/Sprite3D
 onready var health_bar = $Damage/Viewport/ProgressBar
 
-onready var hitbox = $Hitbox/Area
-onready var atk_timer = $Hitbox/Hit_timer
+onready var detectbox = $Rotation_Helper/detectbox
+var detected = false
+onready var hitbox = $Rotation_Helper/Hitbox/Area
+onready var atk_timer = $Rotation_Helper/Hitbox/Hit_timer
 
 onready var rotate_helper = $Rotation_Helper
-onready var raycast = $Rotation_Helper/raycast
+# onready var raycast = $Rotation_Helper/raycast
 onready var spatial_parent = get_parent()
 var player
+onready var animation_player = $AnimationPlayer
+
 
 
 var DEG_RAY = 22.5
@@ -29,8 +33,6 @@ var vel =Vector3()
 var dir = Vector3(0, 0, 0)
 var rot_xform;
 
-var wandering = true
-
 func _ready():
 	# setup_raycat()
 	# print(rotate_helper)
@@ -40,13 +42,25 @@ func _ready():
 		player = get_tree().get_root().get_node("World/Player")
 
 	setup_hitbox()
+	detectbox.connect("body_entered", self, "_on_detect")
+	# detectbox.connect("body_exited", self, "_on_lost")
+	animation_player.play("idle")
 	
+func _on_detect(body):
+	if body.has_method("player"):
+		detected = true
+		animation_player.play("Walk")
+
+# func _on_lost(body):
+# 	detected = false
+# 	animation_player.play("idle")
+
 	
 func _physics_process(delta):
 # 	update_raycast()
 # 	rot_xform = rotate_helper.rotation
-
-	move(MOVE_SPEED, delta)
+	if detected:
+		move(MOVE_SPEED, delta)
 
 func get_player_cor():
 	var player_cor = player.translation

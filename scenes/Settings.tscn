@@ -1,0 +1,110 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://fonts/montreal/Montreal-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scripts/Settings.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.0588235, 0.0470588, 0.0470588, 1 )
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+
+[node name="Settings" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -250.0
+margin_top = -148.0
+margin_right = 250.0
+margin_bottom = 152.0
+rect_pivot_offset = Vector2( 250, 150 )
+color = Color( 0.6, 0.6, 0.6, 1 )
+
+[node name="HBoxContainer" type="Control" parent="ColorRect"]
+anchor_left = 0.254836
+anchor_top = 0.218333
+anchor_right = 0.293898
+anchor_bottom = 0.218333
+margin_left = -127.418
+margin_top = -86.5
+margin_right = -127.418
+margin_bottom = -86.5
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Controls" type="Button" parent="ColorRect/HBoxContainer"]
+margin_left = 103.0
+margin_right = 203.0
+margin_bottom = 21.0
+custom_fonts/font = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+text = "Controls"
+
+[node name="Sound" type="Button" parent="ColorRect/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 21.0
+custom_fonts/font = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
+text = "Sound"
+
+[node name="Label" type="Label" parent="ColorRect"]
+margin_left = 38.0
+margin_top = 44.0
+margin_right = 124.0
+margin_bottom = 58.0
+text = "Sound effects"
+
+[node name="Sound_effects" type="HSlider" parent="ColorRect"]
+margin_left = 38.0
+margin_top = 65.0
+margin_right = 138.0
+margin_bottom = 81.0
+value = 25.0
+
+[node name="Label2" type="Label" parent="ColorRect"]
+margin_left = 38.0
+margin_top = 90.0
+margin_right = 112.0
+margin_bottom = 104.0
+text = "Sound track"
+
+[node name="Sound_track" type="HSlider" parent="ColorRect"]
+margin_left = 38.0
+margin_top = 108.0
+margin_right = 138.0
+margin_bottom = 124.0
+value = 40.0
+
+[node name="Back" type="Button" parent="ColorRect"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -171.0
+margin_top = -23.0
+margin_right = -127.0
+margin_bottom = -3.0
+text = "Back"
+
+[node name="Apply" type="Button" parent="ColorRect"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -120.0
+margin_top = -22.0
+margin_right = -17.0
+margin_bottom = -2.0
+text = "Apply settings"

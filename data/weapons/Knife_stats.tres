@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://lib/Gun_stats.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+NAME = "Knife"
+ammo_in_weapon = 1
+spare_ammo = 1
+AMMO_IN_MAG = 1
+DAMAGE = 40
+CAN_RELOAD = false
+CAN_REFILL = false
+IDLE_ANIM_NAME = "Knife_idle"
+FIRE_ANIM_NAME = "Knife_fire"
+RELOADING_ANIM_NAME = "Knife_reload"
+GUN_EQUIP = "Knife_equip"
+GUN_UNEQUIP = "Knife_unequip"

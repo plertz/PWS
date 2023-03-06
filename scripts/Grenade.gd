@@ -12,12 +12,14 @@ var rigid_shape
 var grenade_mesh
 var blast_area
 var explosion_particles
+var soundeffect
 
 func _ready():
 	rigid_shape = $Collision_Shape
 	grenade_mesh = $Grenade
 	blast_area = $Blast_Area
 	explosion_particles = $Explosion
+	soundeffect = $Soundeffect
 
 	explosion_particles.emitting = false
 	explosion_particles.one_shot = true
@@ -31,6 +33,7 @@ func _process(delta):
 	else:
 		if explosion_wait_timer <= 0:
 			explosion_particles.emitting = true
+			soundeffect.play()
 
 			grenade_mesh.visible = false
 			rigid_shape.disabled = true

@@ -1,9 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scripts/Grenade.gd" type="Script" id=1]
 [ext_resource path="res://assets/models/Grenade.scn" type="PackedScene" id=2]
 [ext_resource path="res://assets/materials/GunMaterial.material" type="Material" id=3]
 [ext_resource path="res://assets/materials/Gun_Emission.material" type="Material" id=4]
+[ext_resource path="res://assets/audio/explosion.wav" type="AudioStream" id=5]
+[ext_resource path="res://lib/Sound_effect_volume.gd" type="Script" id=6]
 
 [sub_resource type="PhysicsMaterial" id=8]
 bounce = 0.29
@@ -85,3 +87,9 @@ process_material = SubResource( 3 )
 draw_passes = 2
 draw_pass_1 = SubResource( 5 )
 draw_pass_2 = SubResource( 7 )
+
+[node name="Soundeffect" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 5 )
+unit_db = 20.0
+unit_size = 40.0
+script = ExtResource( 6 )

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Main_menu_Lava_Assault.mp3-19eab1a475f592f6247324f404f96dc4.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/Main_menu_Lava_Assault.mp3"
+dest_files=[ "res://.import/Main_menu_Lava_Assault.mp3-19eab1a475f592f6247324f404f96dc4.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

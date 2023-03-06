@@ -3,9 +3,9 @@ extends KinematicBody
 signal menu_open;
 signal menu_close;
 
-
 onready var weapon_audio = $Rotation_Helper/Player_sound_system
-
+onready var walking_audio = $Rotation_Helper/Walking_sound
+onready var scream_audio = $Rotation_Helper/Scream_sound
 
 onready var NPC = { 
 	"ray": $Rotation_Helper/NPC_point/Ray_Cast,
@@ -14,7 +14,7 @@ onready var NPC = {
 	"talking": false
 }
 
-const MAX_HEALTH = 10
+const MAX_HEALTH = 100
 var health = MAX_HEALTH
 onready var health_bar = $HUD/Health_bar
 
@@ -24,7 +24,9 @@ onready var death_container = $HUD/Death_screen/VBoxContainer
 onready var death_button = $HUD/Death_screen/VBoxContainer/Button
 var death_text = {
 	"lava": "Someone tried to swim in lava!!! STUPID",
+	"fall": "Try to proof the world isn't flat now!!",
 	"E1" : "Someone got smashed to death!!! STUPID",
+	"E2": "HaHaHa!!! Blown up by a cube",
 	"G" : "Someone blew up...... a bit STUPID"
 }
 
@@ -73,16 +75,11 @@ onready var weapon_display = {
 
 onready var grenade_display = get_node("HUD/Weapons/Grenade/num")
 
-var grenade_amounts = {"Grenade":2, "Sticky Grenade":2}
+var grenade_amounts = {"Grenade":3, "Sticky Grenade":2}
 var current_grenade = "Grenade"
 var grenade_scene = preload("res://scenes/Grenade.tscn")
 # var sticky_grenade_scene = preload("res://scenes/Sticky_Grenade.tscn")
 const GRENADE_THROW_FORCE = 50
-
-
-
-var UI_status_label
-
 
 func _ready():
 	camera = $Rotation_Helper/Camera
@@ -271,6 +268,7 @@ func process_movement(delta):
 	hvel = hvel.linear_interpolate(target, accel*delta)
 	vel.x = hvel.x
 	vel.z = hvel.z
+	play_walking_sound(dir)
 	vel = move_and_slide(vel,Vector3(0,1,0), 0.05, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 func process_view_input(_delta):
@@ -369,7 +367,15 @@ func _input(event):
 
 func process_intterupts(_delta):	
 	if Input.is_action_just_pressed("ui_cancel"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+
+		if NPC.body != null and NPC.body.has_method("talk") and freeze and NPC.talking:
+			NPC.NPC_menu.show()
+			NPC.talking = false;
+			# NPC.body.talk()
+			NPC.body.leave()
+			freeze = false
+
+		elif Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			emit_signal("menu_close")
 			freeze = false;
@@ -385,11 +391,13 @@ func process_intterupts(_delta):
 			NPC.talking = true;
 			NPC.body.talk()
 			freeze = true;
-		elif NPC.body != null and NPC.body.has_method("talk") and freeze:
-			NPC.NPC_menu.show()
-			NPC.talking = false;
-			NPC.body.talk()
-			freeze = false
+		elif NPC.body != null and NPC.body.has_method("talk") and freeze and NPC.talking:
+			if !NPC.body.next():
+				NPC.NPC_menu.show()
+				NPC.talking = false;
+				NPC.body.leave()
+				freeze = false
+			
 
 func process_NPC(_delta):
 
@@ -422,6 +430,17 @@ func switch_weapon_display(dis_prev, dis_new):
 func update_grenade_display():
 	grenade_display.text = str(grenade_amounts["Grenade"])
 
+func refill_grenade():
+	grenade_amounts["Grenade"] = 3
+	update_grenade_display()
+
+func play_walking_sound(direction):
+	if direction.x == 0 and direction.y == 0:
+		walking_audio.stop()
+	else:
+		if !walking_audio.playing and is_on_floor():
+			walking_audio.play()
+
 func refill_health():
 	health = MAX_HEALTH
 	update_health_bar()
@@ -432,6 +451,12 @@ func setup_health_bar():
 func update_health_bar():
 	health_bar.value = health
 
+func refill_ammo():
+	weapons["PISTOL"].refill_ammo()
+	weapons["RIFLE"].refill_ammo()
+	refill_grenade()
+
+
 func death(cause):
 	death_label.text = death_text[cause]
 	death_screen.show()
@@ -439,8 +464,11 @@ func death(cause):
 
 func respawn():
 	translation = get_node("../Player_spawn").translation;
+	refill_health()
+	refill_ammo()
 	death_screen.hide()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 
 func fire_bullet():
 	if changing_weapon == true:
@@ -468,10 +496,11 @@ func player():
 func G_hit(damage, msg):
 	hit(damage, msg)
 
+
 func hit(damage, msg):
 	health -= damage
+	scream_audio.play_scream()
 	update_health_bar()
 	if health < 1:
-		refill_health()
 		death(msg)
 

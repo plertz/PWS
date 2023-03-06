@@ -40,6 +40,11 @@ _global_script_classes=[ {
 "path": "res://addons/controller_icons/objects/TextureRect.gd"
 }, {
 "base": "Resource",
+"class": "Fire_cube_stats",
+"language": "GDScript",
+"path": "res://lib/Fire_cube_stats.gd"
+}, {
+"base": "Resource",
 "class": "Gun_stats",
 "language": "GDScript",
 "path": "res://lib/Gun_stats.gd"
@@ -58,6 +63,11 @@ _global_script_classes=[ {
 "class": "TextureFont",
 "language": "GDScript",
 "path": "res://addons/texture_fonts/Classes/TextureFont.gd"
+}, {
+"base": "Resource",
+"class": "Wp_range",
+"language": "GDScript",
+"path": "res://lib/Range.gd"
 } ]
 _global_script_class_icons={
 "ControllerButton": "",
@@ -66,10 +76,12 @@ _global_script_class_icons={
 "ControllerSprite": "",
 "ControllerSprite3D": "",
 "ControllerTextureRect": "",
+"Fire_cube_stats": "",
 "Gun_stats": "",
 "HTerrainDataLoader": "",
 "HTerrainDataSaver": "",
-"TextureFont": "res://addons/texture_fonts/Assets/TextureFont.svg"
+"TextureFont": "res://addons/texture_fonts/Assets/TextureFont.svg",
+"Wp_range": ""
 }
 
 [application]
@@ -87,6 +99,10 @@ default_bus_layout=""
 [autoload]
 
 ControllerIcons="*res://addons/controller_icons/ControllerIcons.gd"
+
+[display]
+
+window/size/borderless=true
 
 [editor_plugins]
 

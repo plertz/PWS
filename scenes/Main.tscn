@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Loading_screen.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Auto_save.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Audio.tscn" type="PackedScene" id=4]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -11,5 +12,7 @@ script = ExtResource( 1 )
 visible = false
 
 [node name="Auto_save" parent="." instance=ExtResource( 3 )]
+
+[node name="Audio" parent="." instance=ExtResource( 4 )]
 
 [connection signal="start" from="Loading_screen" to="." method="_on_Loading_screen_start"]

@@ -56,6 +56,8 @@ func _return_to_menu():
 	pass
 
 func _ready():
+	randomize()
+	seed("ghello, Trishul".hash())
 	add_child(Bootscreen);
 	bootscreen = get_node("Bootscreen")
 	bootscreen.connect("main_menu_ready", self, "_delete_bootscreen");
