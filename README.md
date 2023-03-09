@@ -21,3 +21,13 @@ This game was made based on a survey condcuted under studens of the OSG West-Fri
 
 
 ![Preview](./assets/ui/start_menu.png)
+![Preview](./assets/markdown_images/lava.png)
+![Preview](./assets/markdown_images/sun.png)
+![Preview](./assets/markdown_images/robot.png)
+![Preview](./assets/markdown_images/golem.png)
+![Preview](./assets/markdown_images/fire_cube.png)
+
+
+
+
+
