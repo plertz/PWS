@@ -1,4 +1,7 @@
 
-/assets/models/
-/export/Windows-x86/
-/export/Linux-x86/	
+/assets/models/*
+/export/Windows-x86/*
+/export/Linux-x86/*
+
+*.pck
+*.dae	
