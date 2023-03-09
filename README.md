@@ -20,4 +20,4 @@ This game was made based on a survey condcuted under studens of the OSG West-Fri
 > - Fun to play
 
 
-[![Preview]("https://gitub.com/plertz/PWS/assets/ui/start_menu.png)]
+[![Preview]("https://gitub.com/plertz/PWS/assets/ui/start_menu.png")]
