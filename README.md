@@ -10,14 +10,14 @@ This game was made based on a survey condcuted under studens of the OSG West-Fri
 
 > ### Requirments
 > The game needed to have the following requirements
-> -3D
-> -Open World
-> -FPS
-> -Adventure
-> -Process
-> -Rewards
-> -clear goals
-> -Fun to play
+> - 3D
+> - Open World
+> - FPS
+> - Adventure
+> - Process
+> - Rewards
+> - clear goals
+> - Fun to play
 
 
-[Preview]("./assets/ui/start_menu.png)
+[![Preview]("assets/ui/start_menu.png)]
