@@ -6,7 +6,11 @@ export/Linux-x86/
 models/
 Windows-x86/
 Linux-x86/
-
+*.exe.pck
+*.exe
+*.so
+*.dll
 *.pck
 *.dae
+*.glb
 	
