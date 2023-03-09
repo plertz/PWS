@@ -118,8 +118,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 874.742, 3.82303, 436.596 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 874.765, 1.14776, 389.33 )
 
 [node name="MRVN" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 0.999929, -0.0119378, 0, 0.0119378, 0.999929, 237.467, 9.74266, 173.994 )
-text = [ "Welcome!!", "I Trishul", "Enjoy liver here or somthing." ]
+transform = Transform( 1, 0, 0, 0, 0.999929, -0.0119378, 0, 0.0119378, 0.999929, 235.158, 9.29169, 174.148 )
+text = [ "Welcome!!", "I am Trishul", "Please enjoy your stay!!!!!!!" ]
 
 [node name="MRVN2" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 403.048, 5.02814, 855.244 )
@@ -127,7 +127,7 @@ text = [ "AHHHHHHHH", "Lava makes me feel a bit weird........", "Anyway.. ", "Go
 
 [node name="MRVN3" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 529.7, 3.965, 326.044 )
-text = [ "Thanks buddy!!! You just saved my live.", "These Golems sure are buffed. I wonder to which gym they go???" ]
+text = [ "Thanks buddy!!! You just saved my life.", "These Golems sure are buffed. I wonder to which gym they go???" ]
 
 [node name="MRVN4" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 571.104, 3.9999, 400.773 )

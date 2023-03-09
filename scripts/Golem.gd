@@ -4,7 +4,7 @@ extends KinematicBody
 
 onready var MOVE_SPEED = 10
 onready var ATTACK_SPEED = 1
-onready var DAMAGE = 5
+onready var DAMAGE = 15
 onready var HEALTH = 90
 
 onready var health = HEALTH;

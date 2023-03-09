@@ -24,7 +24,7 @@ onready var death_container = $HUD/Death_screen/VBoxContainer
 onready var death_button = $HUD/Death_screen/VBoxContainer/Button
 var death_text = {
 	"lava": "Someone tried to swim in lava!!! STUPID",
-	"fall": "Try to proof the world isn't flat now!!",
+	"fall": "Try to prove the world isn't flat now!!",
 	"E1" : "Someone got smashed to death!!! STUPID",
 	"E2": "HaHaHa!!! Blown up by a cube",
 	"G" : "Someone blew up...... a bit STUPID"
