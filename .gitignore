@@ -1,16 +1,5 @@
 
-assets/models/
-export/Windows-x86/
-export/Linux-x86/
-
-models/
-Windows-x86/
-Linux-x86/
-*.exe.pck
-*.exe
-*.so
-*.dll
-*.pck
-*.dae
-*.glb
+assets/models/*
+export/Windows-x86/*
+export/Linux-x86/*
 	
